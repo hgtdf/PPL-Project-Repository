@@ -4,12 +4,14 @@
 #include <stdbool.h>
 
 long int findSize(char FileName[]);
-void getText (long int fs, char readText[], char *buffer);
+int getText (long int fs, char readText[], char *buffer);
 
 int main (){
     char *buffer = 0;
     long int fs = findSize("sampletxt.txt"); // fs for "File Size"
     char readText[fs];
+
+    printf("%i\n", fs);
 
     getText(fs, readText, buffer);
 
@@ -26,7 +28,7 @@ long int findSize(char FileName[]){
     }
 
     fseek(FilePointer, 0L, SEEK_END);
-    long int res = ftell(FilePointer);
+    long int res = ftell(FilePointer) + 2;
     fseek(FilePointer, 0, SEEK_SET);
 
     fclose(FilePointer);
@@ -34,24 +36,23 @@ long int findSize(char FileName[]){
     return res;
 }
 
-void getText(long int fs, char readText[], char *buffer){
+int getText(long int fs, char readText[], char *buffer){
     FILE *FileLoc = fopen ("sampletxt.txt", "r");
+    int i = 0;
 
-    if (FileLoc){
-        buffer = malloc(fs + 1);
-
-        if (buffer){
-            fread (buffer, 1, fs, FileLoc);
-        }
-        fclose(FileLoc);
-        buffer[fs] = '\0';
-    }
-    if (buffer){
-        readText = buffer;
-        }
-
-    for (int i=0; i<fs; i++){
-        printf("%s", readText[i]);
+    if (FileLoc == NULL){
+        perror("Error: ");
+        return (-1);
     }
 
+    while(fgets(readText, fs, FileLoc)){
+        printf("%s", readText);
+    }
+    
+/*
+    for (i=0; i<strlen(readText); i++){
+        printf("%c", readText[i]);
+    }
+*/
+    //printf("%i", strlen(readText));
 }
