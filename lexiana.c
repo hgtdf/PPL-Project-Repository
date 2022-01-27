@@ -2,20 +2,22 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 bool isValidDelimiter(char ch) {
-   if ( ch == '+' || ch == '-' || ch == '*' ||
+   if ( ch == " " || ch == '+' || ch == '-' || ch == '*' ||
    ch == '/' || ch == ',' || ch == ';' || ch == '>' ||
    ch == '<' || ch == '=' || ch == '(' || ch == ')' ||
    ch == '[' || ch == ']' || ch == '{' || ch == '}' )
    return (true);
    return (false);
 }
+/*
 bool isSpace(char ch){
    if (ch == " ")
       return(true);
    return(false);
 }
-
+*/
 bool isValidOperator(char ch){
    if (ch == '+' || ch == '-' || ch == '*' ||
    ch == '/' || ch == '>' || ch == '<' ||
