@@ -4,20 +4,14 @@
 #include <stdlib.h>
 
 bool isValidDelimiter(char ch) {
-   if ( ch == " " || ch == '+' || ch == '-' || ch == '*' ||
+   if (ch == " " || ch == '+' || ch == '-' || ch == '*' ||
    ch == '/' || ch == ',' || ch == ';' || ch == '>' ||
    ch == '<' || ch == '=' || ch == '(' || ch == ')' ||
    ch == '[' || ch == ']' || ch == '{' || ch == '}' )
    return (true);
    return (false);
 }
-/*
-bool isSpace(char ch){
-   if (ch == " ")
-      return(true);
-   return(false);
-}
-*/
+
 bool isValidOperator(char ch){
    if (ch == '+' || ch == '-' || ch == '*' ||
    ch == '/' || ch == '>' || ch == '<' ||
@@ -81,7 +75,7 @@ void detectTokens(char* strToBeScanned) {
    int length = strlen(strToBeScanned);
 
    while (right <= length && left <= right) {
-      if (isSpace(strToBeScanned[right]) == false){
+      if (isValidDelimiter(strToBeScanned[right]) == false){
          right++; 
       } //continues to scan until a delimiter is found
          
