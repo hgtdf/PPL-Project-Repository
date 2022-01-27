@@ -6,7 +6,7 @@ bool isValidDelimiter(char ch) {
    if (ch == ' ' || ch == '+' || ch == '-' || ch == '*' ||
    ch == '/' || ch == ',' || ch == ';' || ch == '>' ||
    ch == '<' || ch == '=' || ch == '(' || ch == ')' ||
-   ch == '[' || ch == ']' || ch == '{' || ch == '}')
+   ch == '[' || ch == ']' || ch == '{' || ch == '}' )
    return (true);
    return (false);
 }
@@ -19,11 +19,12 @@ bool isValidOperator(char ch){
 }
 // Returns 'true' if the string is a VALID IDENTIFIER.
 bool isvalidIdentifier(char* str){
-   if (str[0] == '0' || str[0] == '1' || str[0] == '2' ||
-   str[0] == '3' || str[0] == '4' || str[0] == '5' ||
-   str[0] == '6' || str[0] == '7' || str[0] == '8' ||
-   str[0] == '9' || isValidDelimiter(str[0]) == true)
-   return (false);
+   if (
+         (strlen(str)>30) || 
+         str[0] == '1' || str[0] == '2' || str[0] == '3' || str[0] == '4' || str[0] == '5' ||
+         str[0] == '6' || str[0] == '7' || str[0] == '8' || str[0] == '9' || str[0] == '_' || isValidDelimiter(str[0])
+         )
+            return (false);
    return (true);
 }
 bool isValidKeyword(char* str) {
@@ -67,40 +68,46 @@ char* subString(char* str, int left, int right) {
    subStr[right - left + 1] = '\0';
    return (subStr);
 }
-void detectTokens(char* str) {
+void detectTokens(char* strToBeScanned) {
    int left = 0, right = 0;
-   int length = strlen(str);
+   int length = strlen(strToBeScanned);
+
    while (right <= length && left <= right) {
-      if (isValidDelimiter(str[right]) == false)
-      right++;
-      if (isValidDelimiter(str[right]) == true && left == right) {
-         if (isValidOperator(str[right]) == true)
-         printf("Valid operator : '%c'\n", str[right]);
+      if (isValidDelimiter(strToBeScanned[right]) == false)
+         right++;
+
+      if (isValidDelimiter(strToBeScanned[right]) == true && left == right) {
+         if (isValidOperator(strToBeScanned[right]) == true)
+            printf("Valid operator : '%c'\n", strToBeScanned[right]);
          right++;
          left = right;
-      } else if (isValidDelimiter(str[right]) == true && left != right || (right == length && left !=       right)) {
-         char* subStr = subString(str, left, right - 1);
+      }  else if (isValidDelimiter(strToBeScanned[right]) == true && left != right || (right == length && left != right)) {
+            char* subStr = subString(strToBeScanned, left, right - 1);
+
          if (isValidKeyword(subStr) == true)
             printf("Valid keyword : '%s'\n", subStr);
+
          else if (isValidInteger(subStr) == true)
             printf("Valid Integer : '%s'\n", subStr);
+
          else if (isRealNumber(subStr) == true)
             printf("Real Number : '%s'\n", subStr);
-         else if (isvalidIdentifier(subStr) == true
-            && isValidDelimiter(str[right - 1]) == false)
-         printf("Valid Identifier : '%s'\n", subStr);
-         else if (isvalidIdentifier(subStr) == false
-            && isValidDelimiter(str[right - 1]) == false)
-         printf("Invalid Identifier : '%s'\n", subStr);
+
+         else if (isvalidIdentifier(subStr) == true && isValidDelimiter(strToBeScanned[right - 1]) == false)
+            printf("Valid Identifier : '%s'\n", subStr);
+
+         else if (isvalidIdentifier(subStr) == false && isValidDelimiter(strToBeScanned[right - 1]) == false)
+            printf("Invalid Identifier : '%s'\n", subStr);
+
          left = right;
       }
    }
    return;
 }
 int main(){
-   char str[100] = "float x = a + 1b; ";
-   printf("The Program is : '%s' \n", str);
+   char strToBeScanned[100] = "char charlito = a + b * (d - e); ";
+   printf("The Program is : '%s' \n", strToBeScanned);
    printf("All Tokens are : \n");
-   detectTokens(str);
+   detectTokens(strToBeScanned);
    return (0);
 }
