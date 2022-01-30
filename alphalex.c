@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+
 long int findSize(char FileName[]);
 int getText (long int fs, char readText[], char *buffer);
 
@@ -11,10 +12,8 @@ int main (){
     long int fs = findSize("sampletxt.txt"); // fs for "File Size"
     char readText[fs];
 
-    printf("%i\n", fs);
-
     getText(fs, readText, buffer);
-
+    
     return 1;
 }
 
@@ -48,11 +47,5 @@ int getText(long int fs, char readText[], char *buffer){
     while(fgets(readText, fs, FileLoc)){
         printf("%s", readText);
     }
-    
-/*
-    for (i=0; i<strlen(readText); i++){
-        printf("%c", readText[i]);
-    }
-*/
-    //printf("%i", strlen(readText));
 }
+
