@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 bool isValidDelimiter(char ch) {
-   if (ch == ' ' || ch == '+' || ch == '-' || ch == '*' ||
+   if (ch == ' ' || ch == '\n' || ch == '+' || ch == '-' || ch == '*' ||
    ch == '/' || ch == ',' || ch == ';' || ch == '>' ||
    ch == '<' || ch == '=' || ch == '(' || ch == ')' ||
    ch == '[' || ch == ']' || ch == '{' || ch == '}')
@@ -103,13 +103,12 @@ void detectTokens(char* str) {
         inp = fopen("sampletxt.txt","r");		//filename of your data file 
         char arr[100][50];			//max word length 50 
         int i = 0; 
-        while(1){ 
-            char r = (char)fgetc(inp); 
+        while(1){
             int k = 0; 
-            while(!feof(inp)){	//read till , or EOF 
-                arr[i][k++] = r;			//store in array 
-                r = (char)fgetc(inp); 
-                detectTokens(r);
+            char r;
+            while(!feof(inp)){	
+               r = (char)fgetc(inp);//read till , or EOF 
+                arr[i][k++] = r;		//store in array 
             } 
             arr[i][k]=0;		//make last character of string null  
             if(feof(inp)){		//check again for EOF 
@@ -119,7 +118,8 @@ void detectTokens(char* str) {
         } 
         int j; 
         for(j = 0;j<=i;j++){ 
-            printf("%s\n",arr[j] );	//print array 
+            //printf("%s\n",arr[j] ); //print array 
+            detectTokens (arr[j]);
         } 
         return 0; 
     } 
