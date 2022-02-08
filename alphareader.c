@@ -2,19 +2,28 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+bool isWhiteSpace(char ch){
+   if (ch == ' ' || ch == '\n')
+      return (true);
+   
+   return (false);
+}
+
 bool isValidDelimiter(char ch) {
    if (ch == ' ' || ch == '\n' || ch == '+' || ch == '-' || ch == '*' ||
    ch == '/' || ch == ',' || ch == ';' || ch == '>' ||
    ch == '<' || ch == '=' || ch == '(' || ch == ')' ||
    ch == '[' || ch == ']' || ch == '{' || ch == '}')
-   return (true);
+      return (true);
+   
    return (false);
 }
 bool isValidOperator(char ch){
    if (ch == '+' || ch == '-' || ch == '*' ||
-   ch == '/' || ch == '>' || ch == '<' ||
-   ch == '=')
-   return (true);
+   ch == '/' || ch == '>' || ch == '<' || ch == '=')
+      return (true);
+   
    return (false);
 }
 // Returns 'true' if the string is a VALID IDENTIFIER.
@@ -23,15 +32,17 @@ bool isvalidIdentifier(char* str){
    str[0] == '3' || str[0] == '4' || str[0] == '5' ||
    str[0] == '6' || str[0] == '7' || str[0] == '8' ||
    str[0] == '9' || isValidDelimiter(str[0]) == true)
-   return (false);
+      return (false);
+   
    return (true);
 }
 bool isValidKeyword(char* str) {
-   if (!strcmp(str, "if") || !strcmp(str, "else") || !strcmp(str, "while") || !strcmp(str, "do") ||    !strcmp(str, "break") || !strcmp(str, "continue") || !strcmp(str, "int")
-   || !strcmp(str, "double") || !strcmp(str, "float") || !strcmp(str, "return") || !strcmp(str,    "char") || !strcmp(str, "case") || !strcmp(str, "char")
-   || !strcmp(str, "sizeof") || !strcmp(str, "long") || !strcmp(str, "short") || !strcmp(str, "typedef") || !strcmp(str, "switch") || !strcmp(str, "unsigned")
-   || !strcmp(str, "void") || !strcmp(str, "static") || !strcmp(str, "struct") || !strcmp(str, "goto"))
-   return (true);
+   if (!strcmp(str, "if") || !strcmp(str, "else") || !strcmp(str, "while") || !strcmp(str, "int")
+   || !strcmp(str, "double") || !strcmp(str, "float") || !strcmp(str, "return") || !strcmp(str, "char") 
+   || !strcmp(str, "case") || !strcmp(str, "char")  || !strcmp(str, "switch") || !strcmp(str, "void")
+   || !strcmp(str, "scan") || !strcmp(str, "print"))
+      return (true); //Di pa nalalagay ang mga noise words
+   
    return (false);
 }
 bool isValidInteger(char* str) {
@@ -78,7 +89,7 @@ void detectTokens(char* str) {
          printf("Valid operator : '%c'\n", str[right]);
          right++;
          left = right;
-      } else if (isValidDelimiter(str[right]) == true && left != right || (right == length && left !=       right)) {
+      } else if (isValidDelimiter(str[right]) == true && left != right || (right == length && left != right)) {
          char* subStr = subString(str, left, right - 1);
          if (isValidKeyword(subStr) == true)
             printf("Valid keyword : '%s'\n", subStr);
@@ -101,25 +112,25 @@ void detectTokens(char* str) {
     { 
         FILE* inp; 
         inp = fopen("sampletxt.txt","r");		//filename of your data file 
-        char arr[100][50];			//max word length 50 
+        char arr[106][50];			//max word length 50 max line 106
         int i = 0; 
         while(1){
             int k = 0; 
-            char r;
-            while(!feof(inp)){	
-               r = (char)fgetc(inp);//read till , or EOF 
-                arr[i][k++] = r;		//store in array 
+            char r = ' ';
+            while(!feof(inp) && r!='\n'){	
+               r = (char)fgetc(inp); //read till , or EOF 
+               arr[i][k++] = r;		//store in array 
             } 
-            arr[i][k]=0;		//make last character of string null  
+            arr[i][k]='\0'; //make last character of string null  
             if(feof(inp)){		//check again for EOF 
                 break; 
             } 
             i++; 
         } 
         int j; 
-        for(j = 0;j<=i;j++){ 
-            //printf("%s\n",arr[j] ); //print array 
+        for(j = 0; j<=i; j++){
+            printf("line [%i]: %s", j+1, arr[j] ); //print array 
             detectTokens (arr[j]);
-        } 
+        }
         return 0; 
     } 
