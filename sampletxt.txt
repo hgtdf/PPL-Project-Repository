@@ -1,2 +1,5 @@
-int a = d / f;
-	bool 'isthisallowed" = false;
+int a = d / 75.5;
+	bool "isthisallowed" = false;
+if (a == c){
+	print("wow it works!");
+}
