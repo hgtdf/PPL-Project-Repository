@@ -13,3 +13,5 @@ To be done:
 - yung laman ng file seems to be not being converted in a char array (string). find a way na maging char array yung content ng file, para tanggapin siya ng lexical analyzer natin. yung identifier ng lexical analyzer fixed na (ata). try to make the file run and see ano pang kulang (transfer the contents of lexiana to alphalex). read and understand the code. refresh your knowledge in c. pasahan na ng first revision guys tomorrow. thank you :>
 
 02/08/2022 : alphareader.c is now our primary file many features are now integrated in it. refurnishing na lang.
+
+02/09/2022: lexiana.c is our official file that is to be passed to ma'am ria
