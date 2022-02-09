@@ -1,5 +1,2 @@
-int a = d / 75.5;
-	bool "isthisallowed" = false;
-if (a == c){
-	print("wow it works!");
-}
+_identifier
+identi_fier

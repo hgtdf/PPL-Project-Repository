@@ -33,7 +33,6 @@ int main(int argc, char const *argv[])
         } 
         int j; 
         for(j = 0; j<=i; j++){
-            printf("LINE [%i]: %s\n", j+1, arr[j] ); //print array 
             detectTokens (arr[j]);
         }
         return 0; 
