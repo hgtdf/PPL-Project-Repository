@@ -68,7 +68,7 @@ bool isvalidIdentifier (char* str){
 }
 
 bool isValidKeyword(char* str) {
-   if (!strcmp(str, "if") || !strcmp(str, "else") || !strcmp(str, "while") || !strcmp(str, "break") || !strcmp(str, "int")
+   if (!strcmp(str, "if") || !strcmp(str, "for") || !strcmp(str, "else") || !strcmp(str, "while") || !strcmp(str, "break") || !strcmp(str, "int")
       || !strcmp(str, "double") || !strcmp(str, "float") || !strcmp(str, "return") || !strcmp(str, "char") || !strcmp(str, "case")
       || !strcmp(str, "long") || !strcmp(str, "switch") || !strcmp(str, "void") || !strcmp(str, "default") || !strcmp(str, "print") 
       || !strcmp(str, "scan") || !strcmp(str, "integer") || !strcmp(str, "character") || !strcmp(str, "printline") || !strcmp(str, "scanline")
@@ -125,7 +125,7 @@ void detectTokens(char* str) {
          if (isValidKeyword(subStr) == true)
             printf("Valid keyword : %s\n", subStr);
          else if (isValidInteger(subStr) == true)
-            printf("Valid Integer : %s\n", subStr);
+            printf("Valid numerical constant : %s\n", subStr);
          else if (isvalidIdentifier(subStr) == true
             && isValidDelimiter(str[right - 1]) == false)
          printf("Valid Identifier : %s\n", subStr);

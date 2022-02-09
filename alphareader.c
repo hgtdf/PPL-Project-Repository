@@ -53,7 +53,8 @@ bool isValidDelimiter (char ch) {
 bool isValidOperator (char ch){
    if (ch == '+' || ch == '-' || ch == '*' ||
    ch == '/' || ch == '>' || ch == '<' ||
-   ch == '=' || ch == '|' || ch == '&' || ch == '!')
+   ch == '=' || ch == '|' || ch == '&' || ch == '!'
+   || ch == '%' || ch == '^')
    return (true);
    return (false);
 }
@@ -125,7 +126,7 @@ void detectTokens(char* str) {
          if (isValidKeyword(subStr) == true)
             printf("Valid keyword : %s\n", subStr);
          else if (isValidInteger(subStr) == true)
-            printf("Valid Integer : %s\n", subStr);
+            printf("Valid numerical constant : %s\n", subStr);
          else if (isvalidIdentifier(subStr) == true
             && isValidDelimiter(str[right - 1]) == false)
          printf("Valid Identifier : %s\n", subStr);
