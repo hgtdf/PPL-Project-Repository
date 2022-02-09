@@ -52,7 +52,8 @@ bool isValidDelimiter (char ch) {
 bool isValidOperator (char ch){
    if (ch == '+' || ch == '-' || ch == '*' ||
    ch == '/' || ch == '>' || ch == '<' ||
-   ch == '=' || ch == '|' || ch == '&' || ch == '!')
+   ch == '=' || ch == '|' || ch == '&' || ch == '!'
+   || ch == '%' || ch == '^')
    return (true);
    return (false);
 }
