@@ -2,6 +2,8 @@
 identifier
 _identifier
 iden_tifier
+123ident
+iden123
 
 for (int i=0; i<len i++){
     print("this is a printline.");
@@ -22,7 +24,7 @@ i%j;
 a = b;
 a = 75;
 hence b = 75;
-
+b = 75;
 if (a == b){
    if (a == c){
         print(a);

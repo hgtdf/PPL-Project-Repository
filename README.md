@@ -15,3 +15,21 @@ To be done:
 02/08/2022 : alphareader.c is now our primary file many features are now integrated in it. refurnishing na lang.
 
 02/09/2022: lexiana.c is our official file that is to be passed to ma'am ria
+
+02/10/2022: Things to be updated (from our presentation with ma'am)
+
+            Sa document:
+                - ambiguity sa identifier, walang can include digitLiteral
+                - may nakita rin ako sa Loop part sa document na sobra sobra ang lagay, di na ata need yung syntax don exampla lang ata need.
+
+            Sa Program:
+                - specific file type lang dapat ang input
+                - output must be a FILE
+                - gawing malloc yung size ng array
+                - use finite automata (although I don't know how, let's research on this)
+                    --applicable to sa lahat, lalo na at di natin mabasa yung logical operators and comments actually almost everything. major part to ng revision.
+                - hiwalay ang keyword, reserved at noise words
+                - constants and literals
+                    -- kung integer dapat int lumalabas, if float, float, long, char string ...
+                
+                Syntax Analyzer or Parser(?) dapat magkaroon na ng first revision. Di ko alam anong hinahanap ni ma'am dito, can we ask other people in other groups. Baka kasi may namissout nanaman tayo sabihin na naman ni ma'am alam ng ibang group nye.
