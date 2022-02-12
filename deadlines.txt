@@ -1,0 +1,12 @@
+PPL:
+Feb 9 - initial checking of lexical analyzer
+Feb 14 - discussion
+Feb 21 - final checking of lexical analyzer/initial checking of syntax analyzer
+Feb 28 - final checking of syntax analyzer
+
+NLP:
+mag-group na po kayo into 5 groups, 8 members
+
+paper review: magbibigay si mam ng topic, each group gets 1 random topic, create an RRL and review of said RRL, identify the research gap of the topic
+
+March 7 - checking of paper

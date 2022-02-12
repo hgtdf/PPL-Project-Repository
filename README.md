@@ -19,8 +19,10 @@ To be done:
 02/10/2022: Things to be updated (from our presentation with ma'am)
 
             Sa document:
-                - ambiguity sa identifier, walang can include digitLiteral
+                - ambiguity sa identifier, walang can include digitLiteral, ang comments same syntax with integer division
                 - may nakita rin ako sa Loop part sa document na sobra sobra ang lagay, di na ata need yung syntax don exampla lang ata need.
+                - pakitanggal yung ibang noise words, hence na lang ang itira. so gagawa ulit tayo ng automata.
+                - remove si void, ipasok si true and false. or para saan ba si void
 
             Sa Program:
                 - specific file type lang dapat ang input
@@ -33,3 +35,13 @@ To be done:
                     -- kung integer dapat int lumalabas, if float, float, long, char string ...
                 
                 Syntax Analyzer or Parser(?) dapat magkaroon na ng first revision. Di ko alam anong hinahanap ni ma'am dito, can we ask other people in other groups. Baka kasi may namissout nanaman tayo sabihin na naman ni ma'am alam ng ibang group nye.
+
+To do: (Deadline: By monday 02/15/2022)         --MAIN TASK IS TO REVISE THE DOCUMENT--
+    - ambiguity sa identifier.
+    - palitan ang comments or integer division?
+    - tatanggalin yung syntax sa LOOPS sa document.
+    - tanggalin yung ibang noise words itira lang hence.
+    - pakisama nga rin sa machine yung comments, pang dulo na lang siya siguro. 
+    - ipasok si true and false sa reserved words.
+    - study your respective parts sa programming then we update each everyone on monday.
+    - meet ulit by monday (1:30 PM NLP Time)
