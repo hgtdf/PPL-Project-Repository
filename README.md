@@ -22,26 +22,25 @@ To be done:
                 - ambiguity sa identifier, walang can include digitLiteral, ang comments same syntax with integer division
                 - may nakita rin ako sa Loop part sa document na sobra sobra ang lagay, di na ata need yung syntax don exampla lang ata need.
                 - pakitanggal yung ibang noise words, hence na lang ang itira. so gagawa ulit tayo ng automata.
-                - remove si void, ipasok si true and false. or para saan ba si void
+                - ipasok si true and false
 
             Sa Program:
-                - specific file type lang dapat ang input
-                - output must be a FILE
-                - gawing malloc yung size ng array
+                - specific file type lang dapat ang input (shane)
+                - output must be a FILE (miguel)
+                - gawing malloc yung size ng array (nina)
                 - use finite automata (although I don't know how, let's research on this)
-                    --applicable to sa lahat, lalo na at di natin mabasa yung logical operators and comments actually almost everything. major part to ng revision.
-                - hiwalay ang keyword, reserved at noise words
+                    --applicable to sa lahat, lalo na at di natin mabasa yung logical operators and comments actually almost everything. major part to ng revision.     - howell, vincent, jericho
+                - hiwalay ang keyword, reserved at noise words --no one
                 - constants and literals
-                    -- kung integer dapat int lumalabas, if float, float, long, char string ...
+                    -- kung integer dapat int lumalabas, if float, float, long, char string ... (jessie)
                 
                 Syntax Analyzer or Parser(?) dapat magkaroon na ng first revision. Di ko alam anong hinahanap ni ma'am dito, can we ask other people in other groups. Baka kasi may namissout nanaman tayo sabihin na naman ni ma'am alam ng ibang group nye.
 
 To do: (Deadline: By monday 02/15/2022)         --MAIN TASK IS TO REVISE THE DOCUMENT--
-    - ambiguity sa identifier.
-    - palitan ang comments or integer division?
-    - tatanggalin yung syntax sa LOOPS sa document.
-    - tanggalin yung ibang noise words itira lang hence.
-    - pakisama nga rin sa machine yung comments, pang dulo na lang siya siguro. 
-    - ipasok si true and false sa reserved words.
+    - palitan ang comments or integer division? /- line comment /*                      - vincent
+    - tanggalin yung ibang noise words itira lang hence.                                - nina
+    - pakisama nga rin sa machine yung comments, pang dulo na lang siya siguro.         - vincent
+    - ipasok si true and false sa reserved words.                                       - howell
     - study your respective parts sa programming then we update each everyone on monday.
+    - symbol table
     - meet ulit by monday (1:30 PM NLP Time)
