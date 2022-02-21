@@ -36,7 +36,7 @@ To be done:
                 
                 Syntax Analyzer or Parser(?) dapat magkaroon na ng first revision. Di ko alam anong hinahanap ni ma'am dito, can we ask other people in other groups. Baka kasi may namissout nanaman tayo sabihin na naman ni ma'am alam ng ibang group nye.
 
-To do: (Deadline: By monday 02/15/2022)         --MAIN TASK IS TO REVISE THE DOCUMENT--
+To do: (Deadline: By monday 02/14/2022)         --MAIN TASK IS TO REVISE THE DOCUMENT--
     - palitan ang comments or integer division? /- line comment /*                      - vincent
     - tanggalin yung ibang noise words itira lang hence.                                - nina
     - pakisama nga rin sa machine yung comments, pang dulo na lang siya siguro.         - vincent
@@ -44,3 +44,8 @@ To do: (Deadline: By monday 02/15/2022)         --MAIN TASK IS TO REVISE THE DOC
     - study your respective parts sa programming then we update each everyone on monday.
     - symbol table
     - meet ulit by monday (1:30 PM NLP Time)
+
+
+To do: (Deadline: By Wednesday 02/16/2022)
+    - machines, insert true and false, adjust lahat
+    - 
