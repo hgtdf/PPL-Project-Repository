@@ -6,24 +6,27 @@ int buffstate, buffcount = 0; // parang pareho lang tong currstate sa int charCl
 int counter = 0;
 char currchar = 0;
 char nextchar = 0;
-char lexeme[50] = {'\0'};
+char strToken = 0;
+char lexeme[100] = {'\0'};
 FILE *fileptr = NULL;
 char *filecontent = NULL; 
 int right = 0;
 int left = 0;
 
 int checkfile();
-void openfile();
 void lexical();
 char getNonBlank();
 char getChar();
 char getNextChar();
 void processfile();
-int transition(state, char);
-bool find_dest(state , char);
+int transition();
+bool find_dest();
 int get_dest();
 void accept();
 void reset();
+void getComment();
+char find_Tokens();
+char find_Desc();
 
 int main (){
 	//printf("kahit sa main man lang\n");
@@ -33,7 +36,7 @@ int main (){
 } // end of main
 
 void lexical (){ //int
-	int i = 0;
+	//int i = 0;
 	currchar = 'a'; //just to initialize
 	while (currchar != 0){ //
 		switch (currstate){
@@ -41,9 +44,9 @@ void lexical (){ //int
 					currchar = getNonBlank();
 					if (find_dest(currstate, currchar) == true){
 						currstate = transition(currstate, currchar);
-						lexeme[buffcount] = currchar;
+						lexeme[buffcount] = currchar; //lexeme [0] = /
 						//printf("ipinasok si %c kay lexeme\n", currchar);
-						buffcount++;
+						buffcount++; //lexeme [1] = 
 					}else if(isq0_identifier(currchar) == true){
 						printf("ako ay nandito line 48, currchar ay: %c\n", currchar);
 						currstate = q1;
@@ -53,8 +56,9 @@ void lexical (){ //int
 						currstate = q100;
 					}else if (currchar == EOF){
 						printf("I am EOF!\n");
-					}else
-						printf("Unrecognized lexeme: %c\n", currchar);
+					}else{
+						printf("Unrecognized lexeme: -%c- and state %d\n", currchar, currstate);
+					}
 					break;
 
 			case q1:	currchar = getChar();
@@ -68,7 +72,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 						
 			case q2: 	nextchar = getNextChar();
@@ -78,7 +82,7 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -89,7 +93,7 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -100,18 +104,22 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
-			case q5:	nextchar = getNextChar();
+			case q5:	nextchar = getNextChar(); //currchar / nextchar /
 						if (find_dest(currstate, nextchar) == true){
 						currchar = getNonBlank();
-						currstate = get_dest();
+						currstate = get_dest();	//currchar / == nextchar /
 						}else {
-						accept(lexeme, buffcount);
+						strToken = "arithOp";
+						strDesc = "division operator";
+						strToken = find_Tokens(currstate);
+						printf("I am strToken: %s\n", strToken);
+						accept(lexeme, buffcount, token, descr); // / arithOp division operator
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -122,7 +130,7 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -133,7 +141,7 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -143,7 +151,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q9: 	lexeme[buffcount] = currchar;  //++
@@ -152,16 +160,16 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 						
-			case q10: 	lexeme[buffcount] = currchar;  //++
+			case q10: 	lexeme[buffcount] = currchar;  //++ /
 						buffcount++;
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q11:	nextchar = getNextChar();
@@ -171,7 +179,7 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -181,7 +189,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q13: 	lexeme[buffcount] = currchar;  //++
@@ -190,7 +198,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q14: 	lexeme[buffcount] = currchar;  //++
@@ -199,7 +207,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q15: 	lexeme[buffcount] = currchar;  //++
@@ -208,7 +216,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q16: 	lexeme[buffcount] = currchar;  //++
@@ -217,7 +225,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q17: 	lexeme[buffcount] = currchar;  //++
@@ -226,7 +234,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q18:	nextchar = getNextChar();
@@ -236,7 +244,7 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -247,7 +255,7 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -258,7 +266,7 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -269,7 +277,7 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -279,7 +287,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q23:	nextchar = getNextChar();
@@ -289,7 +297,7 @@ void lexical (){ //int
 						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -299,7 +307,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q25: 	lexeme[buffcount] = currchar;  //++
@@ -308,7 +316,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q26: 	lexeme[buffcount] = currchar;  //++
@@ -317,7 +325,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q27: 	lexeme[buffcount] = currchar;  //++
@@ -326,7 +334,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 
 			case q28: 	lexeme[buffcount] = currchar;  //++
@@ -335,7 +343,7 @@ void lexical (){ //int
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 50);
+						memset(lexeme, 0, 100);
 						break;
 			
 			case q29: 	nextchar = getNextChar();
@@ -370,7 +378,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -426,7 +434,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -472,7 +480,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -518,7 +526,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -564,7 +572,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -576,7 +584,7 @@ void lexical (){ //int
 							currchar = q1;
 						break;
 
-			case q50:	lexeme[buffcount] = currchar;
+			case q100:	lexeme[buffcount] = currchar;
 						buffcount++;
 						nextchar = getNextChar();
 						if (find_dest(currstate, nextchar) == true){
@@ -610,7 +618,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -658,7 +666,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -676,7 +684,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -732,7 +740,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -750,7 +758,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -796,7 +804,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -852,7 +860,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -898,7 +906,7 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
 
@@ -954,14 +962,30 @@ void lexical (){ //int
 							reset(&buffcount, &currstate);
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 50);
+							memset(lexeme, 0, 100);
 						}
 						break;
+
+			/*case q82: 	lexeme[buffcount] = currchar;		//for line comments
+						buffcount++;
+						accept(lexeme, buffcount);
+						buffcount = 0;
+						memset(lexeme, 0, 100);
+						currchar = getChar();
+
+						while (currchar != 10){
+							lexeme[buffcount]=currchar;
+							buffcount++;
+							currchar = getchar();
+						}
+
+						printf("%s\n", lexeme);
+						break;*/
 
 			default: {
 				printf("Lexical Error, with current state of %d\n", currstate);
 				reset(&buffcount, &currstate);
-				memset(lexeme, 0, 50);
+				memset(lexeme, 0, 100);
 				break;
 				}
 		} // end of switch
@@ -985,11 +1009,11 @@ void processfile(){
 	filecontent = malloc (counter * sizeof(char) + 1);
 	fread (filecontent, counter * sizeof(char), 1, fileptr);
 	filecontent[counter] = '\0';
-	printf("filecontent = -%s-\n", filecontent);
+	//printf("filecontent = |%s| \n", filecontent);
 	fclose(fileptr);
 }
 
-char getNonBlank(){
+char getNonBlank(){ 
 	while (isspace(filecontent[right])){
 		right++;
 	}
@@ -1004,4 +1028,16 @@ char getChar(){
 
 char getNextChar(){
 	return filecontent[right];
+}
+
+void getComment (char lexeme[100]){
+	char buffcomment;
+	buffcomment = getChar ();
+	int count = 0;
+
+	while (buffcomment != 10){
+		lexeme[count]=buffcomment;
+		count++;
+		buffcomment = getchar();
+	}
 }

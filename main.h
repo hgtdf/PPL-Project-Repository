@@ -6,6 +6,7 @@
 #include <stddef.h>
 
 int i=0;
+int k=0;
 
 void accept();
 void reset();
@@ -19,9 +20,65 @@ typedef enum states{
 	q51, q52, q53, q54, q55, q56, q57, q58, q59, q60,
 	q61, q62, q63, q64, q65, q66, q67, q68, q69, q70,
 	q71, q72, q73, q74, q75, q76, q77, q78, q79, q80,
-	q81,
-	q100 = 100
+	q81, q82, q83, q84, q85, q86, q87, q88, q89, q90,
+	q91, q92, q93, q94, q95, q96, q97, q98, q99, q100
 }state;
+
+struct token {
+	state final_state;
+	char *token;
+	char *token_desc;
+};
+
+struct token token_table [] = {
+	{q1,	"id", 				"identifier"},
+	{q2, 	"arithOp", 			"addition operator"},
+	{q3, 	"arithOp", 			"subtraction operator"},
+	{q4, 	"arithOp",			"multiplication operator"},
+	{q5, 	"arithOp", 			"division operator"},
+	{q6, 	"arithOp", 			"modulus operator"},
+	{q7, 	"arithOp",			"exponent operator"},
+	{q8,	"arithOp", 			"increment operator"},
+	{q9,	"arithOp", 			"decrement operator"},
+	{q10,	"arithOp",			"integer division operator"},
+	{q11,	"assOp",			"assignment operator"},
+	{q12,	"assOp",			"assignment with addition operator"},
+	{q13,	"assOp",			"assignment with subtraction operator"},
+	{q14,	"assOp",			"assignment with multiplication operator"},
+	{q15, 	"assOp",			"assignment with division operator"},
+	{q16,	"assOp",			"assignment with modulus operator"},
+	{q17,	"assOp",			"assignment with exponent operator"},
+	{q18,	"relOp",			"less than operator"},
+	{q19,	"relOp",			"greater than operator"},
+	{q20,	"logOp", 			"not operator"},
+	{q22,	"logOp", 			"and operator"},
+	{q24,	"logOp",			"or operator"},	
+	{q25,	"relOp",			"equality operator"},
+	{q26,	"relOp",			"non-equality operator"},
+	{q27,	"relOp",			"less than or equal to operator"},
+	{q28,	"relOp",			"greater than or equal to operator"},
+	{q31,	"reserved word",	"int"},
+	{q36,	"reserved word",	"float"},
+	{q40,	"reserved word",	"char"},
+	{q44,	"reserved word",	"bool"},
+	{q48,	"reserved word",	"null"},
+	{q52,	"reserved word",	"true"},
+	{q56,	"reserved word",	"false"},
+	{q58,	"keyword",			"for"},
+	{q63,	"keyword",			"while"},
+	{q64,	"keyword",			"if"},
+	{q68,	"keyword",			"else"},
+	{q73,	"keyword",			"print"},
+	{q77,	"keyword",			"scan"},
+	{q82,	"noise word",		"hence"},
+	{q85,	"comment",			"in-line comment"},
+	{q89,	"comment",			"multiple-line comment"},
+	{q90,	"delimeter",		"comma"},
+	{q91,	"delimeter",		"semi-colon"},
+	{q94,	"delimeter",		"single quote"},
+	{q96,	"delimeter",		"double quote"},
+	{q99,	"bracket",			"parenthesis"}
+};
 
 struct transition {
 	state src_state;
@@ -33,7 +90,7 @@ struct transition transition_table [] = {
 	{q0, '+', q2}, {q2, '+', q8}, {q2, '=', q12},
 	{q0, '-', q3}, {q3, '-', q9}, {q3, '=', q13},
 	{q0, '*', q4}, {q4, '=', q14},
-	{q0, '/', q5}, {q5, '/', q10}, {q5, '=', q15},
+	{q0, '/', q5}, {q5, '/', q10}, {q5, '=', q15}, {q5, '-', q82},
 	{q0, '%', q6}, {q6, '=', q16},
 	{q0, '^', q7}, {q7, '=', q17},
 	{q0, '=', q11}, {q11, '=', q25},
@@ -63,7 +120,7 @@ bool find_dest(state srcstate, char currchar){//checks if specified transition i
 	if (srcstate == transition_table[i].src_state && currchar == transition_table[i].reqChar){
 		return true;
 	}
-	else if (i == 83){ // The number here, refers to transition_table[] size
+	else if (i == 84){ // The number here, refers to transition_table[] size
 		i=0;
 		//printf("wala parin talaga... \n");
 		return false;
@@ -74,7 +131,10 @@ bool find_dest(state srcstate, char currchar){//checks if specified transition i
 
 void accept (char lexeme[], int buffcount){
 	int i;
-	printf("I am your lexeme: %s\n", lexeme);
+	for (i=0; i<buffcount; i++){
+		printf("%c", lexeme[i]); 
+	}
+	printf("\n");
 }
 
 void reset (int *buffcount, state *currstate){
@@ -119,6 +179,7 @@ bool isq0_digit(char nextchar){
 }
 
 int checkfile (char *plfile){ // check for file's filetype
+
     char extn[] = ".simp";
     int len1 = strlen(plfile);
     int len2 = strlen(extn);
@@ -146,4 +207,28 @@ int checkfile (char *plfile){ // check for file's filetype
         printf("File invalid.");
         exit(1);
     }
+}
+
+char find_Tokens (state fstate){
+	int a;
+	if (fstate == token_table[k].final_state){
+		a = k;
+		k = 0;
+		return token_table[a].token;
+	}else{
+		k++;
+		find_Tokens(fstate);
+	}
+}
+
+char find_Desc (state fstate){
+	int a;
+	if (fstate == token_table[k].final_state){
+		a = k;
+		k = 0;
+		return token_table[a].token_desc;
+	}else{
+		k++;
+		find_Desc(fstate);
+	}
 }
