@@ -74,10 +74,7 @@ bool find_dest(state srcstate, char currchar){//checks if specified transition i
 
 void accept (char lexeme[], int buffcount){
 	int i;
-	for (i=0; i<buffcount; i++){
-		printf("%c", lexeme[i]);
-	}
-	printf("\n");
+	printf("I am your lexeme: %s\n", lexeme);
 }
 
 void reset (int *buffcount, state *currstate){
