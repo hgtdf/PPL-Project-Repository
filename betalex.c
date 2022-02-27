@@ -9,13 +9,15 @@ char nextchar = 0;
 char lexeme[50] = {'\0'};
 FILE *fileptr = NULL;
 char *filecontent = NULL; 
-int pos = 0;
+int right = 0;
+int left = 0;
 
 int checkfile();
 void openfile();
 void lexical();
 char getNonBlank();
 char getChar();
+char getNextChar();
 void processfile();
 int transition(state, char);
 bool find_dest(state , char);
@@ -24,60 +26,360 @@ void accept();
 void reset();
 
 int main (){
+	//printf("kahit sa main man lang\n");
 	processfile();
 	lexical();
 	free(filecontent);
 } // end of main
 
-void lexical (){
+void lexical (){ //int
 	int i = 0;
-	currchar = getNonBlank();
-	printf("Pumasok ako kay lexical. With state %d currchar %c and lexeme of: %s\n", currstate, currchar, lexeme);
-	while (i < counter+1){
-		printf("Pumasok ako sa while. With state %d currchar %c and lexeme of: %s\n", currstate, currchar, lexeme);
+	currchar = 'a'; //just to initialize
+	while (currchar != 0){ //
 		switch (currstate){
-			case q0: 
-					printf("Pumasok ako sa case 0\n");
-					currstate = transition(currstate, currchar);
-					printf("naghanap ako ng transition. at nakuha ko si q%d\n", currstate);
-					lexeme[buffcount] = currchar;
-					printf("ipinasok ko si currchar: %c sa lexeme[%d] kaya ang laman na niya ay: -%s-\n", currchar, buffcount, lexeme);
-					buffcount++;
-					break;
-			case q1: 
-			case q2: currchar = getNonBlank();
-					printf("ngayon ang nextchar ko ay: %c, at ang state ko ay q%d\n", currchar, currstate);
+			case q0:
+					currchar = getNonBlank();
 					if (find_dest(currstate, currchar) == true){
+						currstate = transition(currstate, currchar);
+						lexeme[buffcount] = currchar;
+						//printf("ipinasok si %c kay lexeme\n", currchar);
+						buffcount++;
+					}else if(isq0_identifier(currchar) == true){
+						printf("ako ay nandito line 48, currchar ay: %c\n", currchar);
+						currstate = q1;
 						lexeme[buffcount] = currchar;
 						buffcount++;
-						currstate = get_dest();
-					}else {
-						printf("ang next char ay wala sa transition kaya back to state 0 na at accept na muna ako\n");
-						accept(lexeme, buffcount);
-						reset(&buffcount, &currstate);
-						lexeme[50] = 0;
-					}
+					}else if (isq0_digit(currchar) == true){
+						currstate = q100;
+					}else 
+						printf("Unrecognized lexeme: %c\n", currchar);
 					break;
-			case q5: printf("Pumasok ako sa case 5\n");
+
+			case q1:	currchar = getChar();
+							while (isalnum(currchar) || currchar == '_'){
+								lexeme[buffcount] = currchar;
+								buffcount++;
+								currchar = getChar();
+							}
+						lexeme[buffcount] = '\0';
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
 						lexeme[50] = 0;
 						break;
-			case q8: printf("Pumasok ako sa case 8\n");
+						
+			case q2: 	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q3: 	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q4: 	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q5:	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q6:	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q7:	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q8: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
 						lexeme[50] = 0;
 						break;
 
+			case q9: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+						
+			case q10: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q11:	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q12: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q13: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q14: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q15: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q16: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q17: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q18:	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q19:	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q20:	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q21:	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q22: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q23:	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else {
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						lexeme[50] = 0;
+						}
+						break;
+
+			case q24: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q25: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q26: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q27: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+
+			case q28: 	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						lexeme[50] = 0;
+						break;
+			
+			case q29: 	nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else
+							currchar = q1;
+						break;
+
+			case q30: 	lexeme[buffcount] = currchar;
+						buffcount++;
+						nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else
+							currchar = q1;
+						break;
+
+			case q31: 	lexeme[buffcount] = currchar;
+						buffcount++;
+						nextchar = getNextChar();
+						if (find_dest(currstate, nextchar) == true){
+						currchar = getNonBlank();
+						currstate = get_dest();
+						}else  if (is_identifier(nextchar)){
+							currstate = q1;
+						}else {
+							printf("So nag accept ako here... Line 365\n");
+							accept(lexeme, buffcount);
+							reset(&buffcount, &currstate);
+							currchar = ' ';
+							nextchar = ' ';
+							lexeme[50] = 0;
+						}
+						break;
+
 			default: {
-				printf("Lexical Error");
+				printf("Lexical Error, with current state of %d\n", currstate);
 				reset(&buffcount, &currstate);
 				lexeme[50] = 0;
 				break;
 				}
 		} // end of switch
-		i++;
-		printf("q%d when exiting switch\n", currstate);
+		//printf("q%d when exiting switch\n", currstate);
 	}// end of while != '\0'
 		
 } // end of lexical
@@ -92,8 +394,7 @@ void processfile(){
 		counter++;
 	}
 	rewind(fileptr); //reset ng fileptr
-	
-	//printf("filecounter[%d]\n", counter);
+
 	//copy contents of file to *filecontent
 	filecontent = malloc (counter * sizeof(char) + 1);
 	fread (filecontent, counter * sizeof(char), 1, fileptr);
@@ -103,16 +404,18 @@ void processfile(){
 }
 
 char getNonBlank(){
-	while (isspace(filecontent[pos])){
-		printf("the content of filecontent[%d] is : %c\n", pos, filecontent[pos]);
-		pos++;
+	while (isspace(filecontent[right])){
+		right++;
 	}
 	return getChar();
 } // end of getNonBlank
 
 char getChar(){
-	int p = pos;
-	printf("kinuha ko si filecontent[%d]\n", p);
-	pos++;
-	return filecontent[p];
+	left = right; // initially ay 0
+	right++; //to position right to the next char 
+	return filecontent[left];
+}
+
+char getNextChar(){
+	return filecontent[right];
 }

@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
     while(lex_token != EOF) {
         printf("Lexeme is: %s, Token is: %s\n", lex_text, lex_token_desc);
         // Output to symbol table file fow now
-        fprintf(sym_file, "%s,%d,%s\n", lex_text, lex_token, lex_token_desc);
+        fprintf(sym_file, "%s,%d,%s\n", lex_te xt, lex_token, lex_token_desc);
         lex();
     }
 
@@ -319,9 +319,7 @@ void lex() {
                         TRANSITION('+', 3),
                         RETRACT_THEN_ACCEPT("Plus Sign", ADD_OP));
             case 3: ACCEPT("Increment Operator", INC_OP);
-            case 4: FINAL_STATE_WITH_TRANSITION(
-                        TRANSITION('-', 5),
-                        RETRACT_THEN_ACCEPT("Hyphen", HYPHEN));
+            case 4: FINAL_STATE_WITH_TRANSITION(TRANSITION('-', 5), RETRACT_THEN_ACCEPT("Hyphen", HYPHEN));
             case 5: FINAL_STATE_WITH_TRANSITION(
                         TRANSITION('>', 166),
                         RETRACT_THEN_ACCEPT("Decrement Operator", DEC_OP));
@@ -444,7 +442,7 @@ void lex() {
             case 75: WORD_STATE(TRANSITION('i', 76));
             case 76: WORD_STATE(TRANSITION('n', 77));
             case 77: WORD_STATE(TRANSITION('u', 78));
-            case 78: WORD_STATE(TRANSITION('e', 79));
+            case 78: WORD_STATE(TRANSITION('e', 79)); //switch_
             case 79: ACCEPT_WORD_OR_TRANSITION_IDENTIFIER(
                         "continue Keyword", CONTINUE_KW);
             case 80: WORD_STATE(
