@@ -42,16 +42,13 @@ void lexical (){ //int
 	while (currchar != 0){ //
 		switch (currstate){
 			case q0:
-					printf("my left is %d my right is %d\n", left, right);
 					currchar = getNonBlank(); //2
-					printf("currchar in q0 -%c-\n", currchar);
 					if (find_dest(currstate, currchar) == true){
 						currstate = transition(currstate, currchar);
 						lexeme[buffcount] = currchar; //lexeme [0] = i
 						//printf("ipinasok si %c kay lexeme\n", currchar);
 						buffcount++; //lexeme [1] = 
 					}else if(isq0_identifier(currchar) == true){
-						printf("ako ay nandito line 48, currchar ay: %c\n", currchar);
 						currstate = q1;;
 						lexeme[buffcount] = currchar;
 						buffcount++;
@@ -60,8 +57,11 @@ void lexical (){ //int
 					}else if (currchar == EOF){
 						printf("I am EOF!\n");
 						currchar = 0;
-					}else{
-						printf("Unrecognized lexeme: -%d- and state %d\n", currchar, currstate);
+					}else if (currchar == 0){
+						currchar = 0;
+					}
+					else{
+						printf("Unrecognized lexeme: -%c- and state %d\n", currchar, currstate);
 					}
 					break;
 
@@ -1080,7 +1080,12 @@ char getNonBlank(){
 
 char getChar(){
 	left = right; // initially ay 0
-	right++; //to position right to the next char 
+	right++;
+
+	if (filecontent[right+] == 0){
+		return 0;
+	}
+	printf ("left is %d, right is %d, char is %c\n", left, right, filecontent[left]);//to position right to the next char 
 	return filecontent[left];
 }
 
