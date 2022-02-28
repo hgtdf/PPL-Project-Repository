@@ -22,9 +22,9 @@ void processfile();
 int get_dest();
 void accept();
 void reset();
-void getComment(char []);
 char find_Tokens();
 char find_Desc();
+bool isFloat();
 
 int main (){
 	//printf("kahit sa main man lang\n");
@@ -59,6 +59,7 @@ void lexical (){ //int
 						currchar = 0;
 					}else if (currchar == 0){
 						currchar = 0;
+						printf("Success.");
 					}
 					else{
 						printf("Unrecognized lexeme: -%c- and state %d\n", currchar, currstate);
@@ -405,7 +406,6 @@ void lexical (){ //int
 						    fprintf(fptr, "Reserved Word: ", lexeme[i]); // int
 							accept(lexeme, buffcount); // on file, Reserved word: int
 							reset(&buffcount, &currstate); // buffcount = 0, currstate = 0
-							printf("nakapagprint na ako\n");
 							currchar = ' ';
 							nextchar = ' ';
 							memset(lexeme, 0, 100); //lexeme wala ng laman
@@ -1017,22 +1017,37 @@ void lexical (){ //int
 						memset(lexeme, 0, 100);
 						break;
 
-						printf("%s\n", lexeme);
+			case q84:	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+                        fprintf(fptr, "lblckcomm: ", lexeme[i]);
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						memset(lexeme, 0, 100);
+						break;
+
+			case q85:	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+                        fprintf(fptr, "rblckcomm: ", lexeme[i]);
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						memset(lexeme, 0, 100);
 						break;
 						
-			case q92:	printf("nakapasok ako dito. \n");
-						printf("My currchar is -%c-\n", currchar);
-						while (isdigit(currchar) || currchar == '.'){
-							printf("i am here with currchar -%c-\n", currchar);
+			case q92:	while (isdigit(currchar) || currchar == '.'){
 								lexeme[buffcount] = currchar;
 								//printf("%s", lexeme[buffcount]);
 								buffcount++;
 								currchar = getChar();
 							}
 						lexeme[buffcount] = '\0';
-						printf("the lexeme is -%s- with buffcount -%d-\n", lexeme, buffcount);
-                        fprintf(fptr, "diglit: ", lexeme);
-						printf("nakapagoutput na ako supposedly: -%s-\n", lexeme);
+						if (isFloat(lexeme, buffcount))
+							fprintf(fptr, "floatval: ", lexeme);
+						else
+							fprintf(fptr, "intval: ", lexeme);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -1080,12 +1095,11 @@ char getNonBlank(){
 
 char getChar(){
 	left = right; // initially ay 0
-	right++;
-
-	if (filecontent[right+] == 0){
-		return 0;
+	if (filecontent[right] == '\0'){
+		return filecontent [left];
 	}
-	printf ("left is %d, right is %d, char is %c\n", left, right, filecontent[left]);//to position right to the next char 
+	right++;
+	//printf ("left is %d, right is %d, char is %c\n", left, right, filecontent[left]);//to position right to the next char 
 	return filecontent[left];
 }
 
@@ -1093,14 +1107,13 @@ char getNextChar(){
 	return filecontent[right];
 }
 
-void getComment (char lexeme[100]){
-	char buffcomment;
-	buffcomment = getNonBlank ();
-	int count = 0;
+bool isFloat (char lexeme [], int buffcount){
+	int c;
 
-	while (buffcomment != 10){
-		lexeme[count]=buffcomment;
-		count++;
-		buffcomment = getchar();
+	for (c = 0; c<buffcount-1; c++){
+		if (lexeme[c] == '.')
+			return true;
 	}
+
+	return false;
 }

@@ -1,4 +1,20 @@
-Identifier: itIetfe
-Identifier: h
-Identifier: og
-Identifier: K
+Reserved Word: float
+Identifier: i
+Increment Operator: ++
+floatval: 5.04
+Reserved Word: int
+Identifier: i
+Assignment Operator: =
+intval: 32
+Line comment: /-
+Contents of line comment:~~~ this is a line comment;       ftyc
+Reserved Word: int
+lblckcomm: /*
+Identifier: incop
+Identifier: addop
+Identifier: subop
+Identifier: divop
+Reserved Word: int
+Identifier: a
+Identifier: b
+rblckcomm: */

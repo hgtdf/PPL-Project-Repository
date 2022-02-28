@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include <stddef.h>
 
+char comment[500] = {'\0'};
 int i=0;
 int k=0;
 FILE *fptr = NULL;
