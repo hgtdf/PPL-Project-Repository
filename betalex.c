@@ -30,6 +30,8 @@ int main (){
 	//printf("kahit sa main man lang\n");
 	processfile();
 	fptr = fopen("output.simp", "w+");
+	if (fptr == NULL)
+		printf("Error opening file.");
 	lexical();
 	free(filecontent);
 } // end of main
@@ -40,24 +42,26 @@ void lexical (){ //int
 	while (currchar != 0){ //
 		switch (currstate){
 			case q0:
-					currchar = getNonBlank();
+					printf("my left is %d my right is %d\n", left, right);
+					currchar = getNonBlank(); //2
+					printf("currchar in q0 -%c-\n", currchar);
 					if (find_dest(currstate, currchar) == true){
 						currstate = transition(currstate, currchar);
-						lexeme[buffcount] = currchar; //lexeme [0] = /
+						lexeme[buffcount] = currchar; //lexeme [0] = i
 						//printf("ipinasok si %c kay lexeme\n", currchar);
 						buffcount++; //lexeme [1] = 
 					}else if(isq0_identifier(currchar) == true){
 						printf("ako ay nandito line 48, currchar ay: %c\n", currchar);
-						currstate = q1;
+						currstate = q1;;
 						lexeme[buffcount] = currchar;
 						buffcount++;
 					}else if (isq0_digit(currchar) == true){
-						currstate = q100;
-					}else if (currchar == ' '){
+						currstate = q92;
+					}else if (currchar == EOF){
 						printf("I am EOF!\n");
 						currchar = 0;
 					}else{
-						printf("Unrecognized lexeme: -%c- and state %d\n", currchar, currstate);
+						printf("Unrecognized lexeme: -%d- and state %d\n", currchar, currstate);
 					}
 					break;
 
@@ -376,7 +380,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q30: 	lexeme[buffcount] = currchar;
@@ -386,7 +390,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q31: 	lexeme[buffcount] = currchar;
@@ -396,14 +400,15 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;
 						}else {
-						    fprintf(fptr, "Reserved Word: ", lexeme[i]);
-							accept(lexeme, buffcount);
-							reset(&buffcount, &currstate);
+						    fprintf(fptr, "Reserved Word: ", lexeme[i]); // int
+							accept(lexeme, buffcount); // on file, Reserved word: int
+							reset(&buffcount, &currstate); // buffcount = 0, currstate = 0
+							printf("nakapagprint na ako\n");
 							currchar = ' ';
 							nextchar = ' ';
-							memset(lexeme, 0, 100);
+							memset(lexeme, 0, 100); //lexeme wala ng laman
 						}
 						break;
 
@@ -412,7 +417,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q33:	lexeme[buffcount] = currchar;
@@ -422,7 +427,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q34:	lexeme[buffcount] = currchar;
@@ -432,7 +437,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q35:	lexeme[buffcount] = currchar;
@@ -442,7 +447,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q36:	lexeme[buffcount] = currchar;
@@ -452,7 +457,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;;
 						}else {
 							fprintf(fptr, "Reserved Word: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -468,7 +473,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q38:	lexeme[buffcount] = currchar;
@@ -478,7 +483,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q39:	lexeme[buffcount] = currchar;
@@ -488,7 +493,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q40:	lexeme[buffcount] = currchar;
@@ -498,7 +503,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;;
 						}else {
 							fprintf(fptr, "Reserved Word: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -514,7 +519,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q42:	lexeme[buffcount] = currchar;
@@ -524,7 +529,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q43:	lexeme[buffcount] = currchar;
@@ -534,7 +539,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q44:	lexeme[buffcount] = currchar;
@@ -544,7 +549,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;;
 						}else {
 							fprintf(fptr, "Reserved Word: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -560,7 +565,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q46:	lexeme[buffcount] = currchar;
@@ -570,7 +575,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q47:	lexeme[buffcount] = currchar;
@@ -580,7 +585,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q48:	lexeme[buffcount] = currchar;
@@ -590,7 +595,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;;
 						}else {
 							fprintf(fptr, "Reserved Word: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -606,7 +611,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q51:	lexeme[buffcount] = currchar;
@@ -616,7 +621,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;;
 						break;
 
 			case q52:	lexeme[buffcount] = currchar;
@@ -626,7 +631,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;
 						}else {
 							fprintf(fptr, "Reserved Word: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -644,7 +649,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q54:	lexeme[buffcount] = currchar;
@@ -654,7 +659,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q55:	lexeme[buffcount] = currchar;
@@ -664,7 +669,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q56:	lexeme[buffcount] = currchar;
@@ -674,7 +679,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;
 						}else {
 							fprintf(fptr, "Reserved Word: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -692,7 +697,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q58:	lexeme[buffcount] = currchar;
@@ -702,7 +707,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;
 						}else {
 							fprintf(fptr, "Keyword: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -718,7 +723,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q60:	lexeme[buffcount] = currchar;
@@ -728,7 +733,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q61:	lexeme[buffcount] = currchar;
@@ -738,7 +743,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q62:	lexeme[buffcount] = currchar;
@@ -748,7 +753,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q63:	lexeme[buffcount] = currchar;
@@ -758,7 +763,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;
 						}else {
 							fprintf(fptr, "Keyword: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -776,7 +781,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;
 						}else {
 							fprintf(fptr, "Keyword: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -792,7 +797,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q66:	lexeme[buffcount] = currchar;
@@ -802,7 +807,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q67:	lexeme[buffcount] = currchar;
@@ -812,7 +817,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q68:	lexeme[buffcount] = currchar;
@@ -822,7 +827,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;
 						}else {
 							fprintf(fptr, "Keyword: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -838,7 +843,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q70:	lexeme[buffcount] = currchar;
@@ -848,7 +853,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q71:	lexeme[buffcount] = currchar;
@@ -858,7 +863,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q72:	lexeme[buffcount] = currchar;
@@ -868,7 +873,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q73:	lexeme[buffcount] = currchar;
@@ -878,7 +883,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;
 						}else {
 							fprintf(fptr, "Keyword: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -894,7 +899,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q75:	lexeme[buffcount] = currchar;
@@ -904,7 +909,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q76:	lexeme[buffcount] = currchar;
@@ -914,7 +919,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q77:	lexeme[buffcount] = currchar;
@@ -924,7 +929,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;
 						}else {
 							fprintf(fptr, "Keyword: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -940,7 +945,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q79:	lexeme[buffcount] = currchar;
@@ -950,7 +955,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q80:	lexeme[buffcount] = currchar;
@@ -960,7 +965,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q81:	lexeme[buffcount] = currchar;
@@ -970,7 +975,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else
-							currchar = q1;
+							currstate = q1;
 						break;
 
 			case q82:	lexeme[buffcount] = currchar;
@@ -980,7 +985,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else  if (is_identifier(nextchar)){
-							currstate = q1;
+							currstate = q1;;
 						}else {
 							fprintf(fptr, "Keyword: ", lexeme[i]);
 							accept(lexeme, buffcount);
@@ -1004,7 +1009,7 @@ void lexical (){ //int
 								currchar = getChar();
 							}
 						lexeme[buffcount] = '\0';
-						fprintf(fptr, "Contents of line comment:~~~", lexeme[i]);
+						fprintf(fptr, "Contents of line comment:~~~");
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -1013,6 +1018,26 @@ void lexical (){ //int
 						break;
 
 						printf("%s\n", lexeme);
+						break;
+						
+			case q92:	printf("nakapasok ako dito. \n");
+						printf("My currchar is -%c-\n", currchar);
+						while (isdigit(currchar) || currchar == '.'){
+							printf("i am here with currchar -%c-\n", currchar);
+								lexeme[buffcount] = currchar;
+								//printf("%s", lexeme[buffcount]);
+								buffcount++;
+								currchar = getChar();
+							}
+						lexeme[buffcount] = '\0';
+						printf("the lexeme is -%s- with buffcount -%d-\n", lexeme, buffcount);
+                        fprintf(fptr, "diglit: ", lexeme);
+						printf("nakapagoutput na ako supposedly: -%s-\n", lexeme);
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						memset(lexeme, 0, 100);
 						break;
 
 			default: {

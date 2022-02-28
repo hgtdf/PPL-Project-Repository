@@ -1,9 +1,1 @@
-++
-//
---
-integetr
-int
-for
-else
-if
-/- i am a line comment!!!!
+int i = 0

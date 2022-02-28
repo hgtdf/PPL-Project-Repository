@@ -22,64 +22,8 @@ typedef enum states{
 	q61, q62, q63, q64, q65, q66, q67, q68, q69, q70,
 	q71, q72, q73, q74, q75, q76, q77, q78, q79, q80,
 	q81, q82, q83, q84, q85, q86, q87, q88, q89, q90,
-	q91, q92, q93, q94, q95, q96, q97, q98, q99, q100
+	q91, q92
 }state;
-
-struct token {
-	state final_state;
-	char *token;
-	char *token_desc;
-};
-
-struct token token_table [] = {
-	{q1,	"id", 				"identifier"},
-	{q2, 	"arithOp", 			"addition operator"},
-	{q3, 	"arithOp", 			"subtraction operator"},
-	{q4, 	"arithOp",			"multiplication operator"},
-	{q5, 	"arithOp", 			"division operator"},
-	{q6, 	"arithOp", 			"modulus operator"},
-	{q7, 	"arithOp",			"exponent operator"},
-	{q8,	"arithOp", 			"increment operator"},
-	{q9,	"arithOp", 			"decrement operator"},
-	{q10,	"arithOp",			"integer division operator"},
-	{q11,	"assOp",			"assignment operator"},
-	{q12,	"assOp",			"assignment with addition operator"},
-	{q13,	"assOp",			"assignment with subtraction operator"},
-	{q14,	"assOp",			"assignment with multiplication operator"},
-	{q15, 	"assOp",			"assignment with division operator"},
-	{q16,	"assOp",			"assignment with modulus operator"},
-	{q17,	"assOp",			"assignment with exponent operator"},
-	{q18,	"relOp",			"less than operator"},
-	{q19,	"relOp",			"greater than operator"},
-	{q20,	"logOp", 			"not operator"},
-	{q22,	"logOp", 			"and operator"},
-	{q24,	"logOp",			"or operator"},	
-	{q25,	"relOp",			"equality operator"},
-	{q26,	"relOp",			"non-equality operator"},
-	{q27,	"relOp",			"less than or equal to operator"},
-	{q28,	"relOp",			"greater than or equal to operator"},
-	{q31,	"reserved word",	"int"},
-	{q36,	"reserved word",	"float"},
-	{q40,	"reserved word",	"char"},
-	{q44,	"reserved word",	"bool"},
-	{q48,	"reserved word",	"null"},
-	{q52,	"reserved word",	"true"},
-	{q56,	"reserved word",	"false"},
-	{q58,	"keyword",			"for"},
-	{q63,	"keyword",			"while"},
-	{q64,	"keyword",			"if"},
-	{q68,	"keyword",			"else"},
-	{q73,	"keyword",			"print"},
-	{q77,	"keyword",			"scan"},
-	{q82,	"noise word",		"hence"},
-	{q85,	"comment",			"in-line comment"},
-	{q89,	"comment",			"multiple-line comment"},
-	{q90,	"delimeter",		"comma"},
-	{q91,	"delimeter",		"semi-colon"},
-	{q94,	"delimeter",		"single quote"},
-	{q96,	"delimeter",		"double quote"},
-	{q99,	"bracket",			"parenthesis"}
-};
 
 struct transition {
 	state src_state;
@@ -90,7 +34,7 @@ struct transition {
 struct transition transition_table [] = {
     {q0, '+', q2}, {q2, '+', q8}, {q2, '=', q12},
     {q0, '-', q3}, {q3, '-', q9}, {q3, '=', q13},
-    {q0, '*', q4}, {q4, '=', q14},
+    {q0, '*', q4}, {q4, '=', q14}, {q4, '/', q85},
     {q0, '/', q5}, {q5, '/', q10}, {q5, '=', q15}, {q5, '-', q83}, {q5, '*', q84},
     {q0, '%', q6}, {q6, '=', q16},
     {q0, '^', q7}, {q7, '=', q17},
@@ -113,7 +57,13 @@ struct transition transition_table [] = {
     {q0, 'e', q65}, {q65, 'l', q66}, {q66, 's', q67}, {q67, 'e', q68},
     {q0, 'p', q69}, {q69, 'r', q70}, {q70, 'i', q71}, {q71, 'n', q72}, {q72, 't', q73},
     {q0, 's', q74}, {q74, 'c', q75}, {q75, 'a', q76}, {q76, 'n', q77},
-    {q0, 'h', q78}, {q78, 'e', q79}, {q79, 'n', q80}, {q80, 'c', q81}, {q81, 'e', q82}
+    {q0, 'h', q78}, {q78, 'e', q79}, {q79, 'n', q80}, {q80, 'c', q81}, {q81, 'e', q82},
+	{q0, ',', q86},
+	{q0, ';', q87},
+	{q0, 39, q88},
+	{q0, 34, q89},
+	{q0, '(', q90},
+	{q0, ')', q91}
 };
 
 bool find_dest(state srcstate, char currchar){//checks if specified transition is present in transitions_table[]
@@ -133,7 +83,7 @@ bool find_dest(state srcstate, char currchar){//checks if specified transition i
 void accept (char lexeme[], int buffcount){
 	int i;
     for (i=0; i<buffcount; i++){
-        fprintf(fptr, "%c", lexeme[i]); 
+        fprintf(fptr, "%c", lexeme[i]);
     }
     fprintf(fptr, "\n");
 }

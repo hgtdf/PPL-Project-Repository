@@ -1,10 +1,5 @@
-Increment Operator: ++
-Integer Division Operator: //
-Decrement Operator: --
-Identifier: integetr
 Reserved Word: int
-Keyword: for
-Keyword: else
-Keyword: if
-Line comment: /-
-Contents of line comment:~~~ i am a line comment!!!!
+Identifier: i
+Assignment Operator: =
+diglit: 0
+Identifier: yD
