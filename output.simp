@@ -9,12 +9,16 @@ intval: 32
 Line comment: /-
 Contents of line comment:~~~ this is a line comment;       ftyc
 Reserved Word: int
-lblckcomm: /*
-Identifier: incop
-Identifier: addop
-Identifier: subop
-Identifier: divop
-Reserved Word: int
-Identifier: a
-Identifier: b
+rblckcmmnt: /*
+Contents of block comment:~~~
+
+
+
+
+
+    incop
+    addop
+    subop
+    divop
+    int a b
 rblckcomm: */

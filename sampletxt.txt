@@ -5,3 +5,87 @@ int i
 
 right = |
 left = ~
+
+
+
+
+
+struct token {
+	state final_state;
+	char *tokenconst;
+};
+
+struct token token_table [] = {
+	{q1,	"id"},
+	{q2, 	"addOp"},
+	{q3, 	"subOp"},
+	{q4, 	"multOp"},
+	{q5, 	"divOp"},
+	{q6, 	"modOp"},
+	{q7, 	"expOp"},
+	{q8,	"incOp"},
+	{q9,	"decOp"},
+	{q10,	"intDivOp"},
+	{q11,	"assOp"},
+	{q12,	"assAddOp"},
+	{q13,	"assSubOp"},
+	{q14,	"assMultOp"},
+	{q15, 	"assDivOp"},
+	{q16,	"assModOp"},
+	{q17,	"assExpOp"},
+	{q18,	"lessOp"},
+	{q19,	"gtrOp"},
+	{q20,	"notOp"},
+	{q22,	"andOp"},
+	{q24,	"orOp"},	
+	{q25,	"eqlOp"},
+	{q26,	"nonEqlOp"},
+	{q27,	"lessEqlOp"},
+	{q28,	"gtrEqlOp"},
+	{q31,	"resInt"},
+	{q36,	"resFloat"},
+	{q40,	"resChar"},
+	{q44,	"resBool"},
+	{q48,	"resNull"},
+	{q52,	"resTrue"},
+	{q56,	"resFalse"},
+	{q58,	"keyFor"},
+	{q63,	"keyWhile"},
+	{q64,	"keyIf"},
+	{q68,	"keyElse"},
+	{q73,	"keyPrint"},
+	{q77,	"keyScan"},
+	{q82,	"noiseHence"},
+	{q83,	"linecomm"},
+	{q84,	"lblckcomm"},
+	{q85,	"rblckcomm"},
+	{q86,	"delcom"},
+	{q87,	"delsemcol"},
+	{q88,	"delsquo"},
+	{q89,	"deldquo"},	
+	{q90,	"dellbrack"},
+	{q91,	"delrbrack"}
+};
+
+
+
+
+
+
+
+
+
+
+
+char *findToken (state fstate){
+	int a;
+	int k = 0;
+	if (fstate == token_table[k].final_state){
+		a = k;
+		k = 0;
+		return token_table[a].tokenconst;
+	}else{
+		k++;
+		find_Tokens(fstate);
+	}
+}

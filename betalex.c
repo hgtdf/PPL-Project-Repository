@@ -72,7 +72,7 @@ void lexical (){ //int
 								buffcount++;
 								currchar = getChar();
 							}
-                        fprintf(fptr, "Identifier: ", lexeme[i]);
+                        fprintf(fptr, "<id: >", lexeme[i]);
 						lexeme[buffcount] = '\0';
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
@@ -86,7 +86,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "Addition Operator: ", lexeme[i]);
+                        fprintf(fptr, "<addOp>: ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -98,7 +98,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "Subtraction Operator: ", lexeme[i]);
+                        fprintf(fptr, "<id: >", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -1017,14 +1017,29 @@ void lexical (){ //int
 						memset(lexeme, 0, 100);
 						break;
 
-			case q84:	lexeme[buffcount] = currchar;  //++
+			case q84:	lexeme[buffcount] = currchar;		//for line comments
 						buffcount++;
-                        fprintf(fptr, "lblckcomm: ", lexeme[i]);
+						fprintf(fptr, "rblckcmmnt: ", lexeme[i]);
 						accept(lexeme, buffcount);
+						buffcount = 0;
+						memset(lexeme, 0, 100);
+						currchar = getChar();
+						nextchar = getNextChar();
+							while (currchar != '*' && nextchar != '/'){
+								comment[buffcount] = currchar;
+								buffcount++;
+								currchar = getChar(); //
+								nextchar = getNextChar();
+							}
+						comment[buffcount] = '\0';
+						fprintf(fptr, "Contents of block comment:~~~");
+						accept(comment, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
 						nextchar = ' ';
-						memset(lexeme, 0, 100);
+						left--;
+						right--;
+						memset(comment, 0, 100);
 						break;
 
 			case q85:	lexeme[buffcount] = currchar;  //++
