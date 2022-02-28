@@ -160,29 +160,3 @@ int checkfile (char *plfile){ // check for file's filetype
         exit(1);
     }
 }
-
-
-/*
-char find_Tokens (state fstate){
-	int a;
-	if (fstate == token_table[k].final_state){
-		a = k;
-		k = 0;
-		return token_table[a].token;
-	}else{
-		k++;
-		find_Tokens(fstate);
-	}
-}
-
-char find_Desc (state fstate){
-	int a;
-	if (fstate == token_table[k].final_state){
-		a = k;
-		k = 0;
-		return token_table[a].token_desc;
-	}else{
-		k++;
-		find_Desc(fstate);
-	}
-}*/
