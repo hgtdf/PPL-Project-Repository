@@ -98,7 +98,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "<id: >", lexeme[i]);
+                        fprintf(fptr, "<subOp: >", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -1045,6 +1045,66 @@ void lexical (){ //int
 			case q85:	lexeme[buffcount] = currchar;  //++
 						buffcount++;
                         fprintf(fptr, "rblckcomm: ", lexeme[i]);
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						memset(lexeme, 0, 100);
+						break;
+
+			case q86: lexeme[buffcount] = currchar;  //++
+						buffcount++;
+                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						memset(lexeme, 0, 100);
+						break;
+
+			case q87:	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						memset(lexeme, 0, 100);
+						break;
+
+			case q88:	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						memset(lexeme, 0, 100);
+						break;
+
+			case q89:	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						memset(lexeme, 0, 100);
+						break;
+
+			case q90:	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+						accept(lexeme, buffcount);
+						reset(&buffcount, &currstate);
+						currchar = ' ';
+						nextchar = ' ';
+						memset(lexeme, 0, 100);
+						break;
+
+			case q91:	lexeme[buffcount] = currchar;  //++
+						buffcount++;
+                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
