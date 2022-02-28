@@ -34,7 +34,7 @@ struct token token_table [] = {
 	{q16,	"assModOp"},
 	{q17,	"assExpOp"},
 	{q18,	"lessOp"},
-	{q19,	"gtrOp"},
+	{q19,	"grtOp"},
 	{q20,	"notOp"},
 	{q22,	"andOp"},
 	{q24,	"orOp"},	
