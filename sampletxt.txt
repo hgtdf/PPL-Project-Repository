@@ -41,7 +41,7 @@ struct token token_table [] = {
 	{q25,	"eqlOp"},
 	{q26,	"nonEqlOp"},
 	{q27,	"lessEqlOp"},
-	{q28,	"gtrEqlOp"},
+	{q28,	"grtEqlOp"},
 	{q31,	"resInt"},
 	{q36,	"resFloat"},
 	{q40,	"resChar"},
