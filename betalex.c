@@ -72,7 +72,7 @@ void lexical (){ //int
 								buffcount++;
 								currchar = getChar();
 							}
-                        fprintf(fptr, "<id: >", lexeme[i]);
+                        fprintf(fptr, "<id> ", lexeme[i]);
 						lexeme[buffcount] = '\0';
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
@@ -86,7 +86,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "<addOp>: ", lexeme[i]);
+                        			fprintf(fptr, "<addOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -98,7 +98,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "<subOp: >", lexeme[i]);
+                        			fprintf(fptr, "<subOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -110,7 +110,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "Multiplication Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<multOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -122,7 +122,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();	//currchar / == nextchar /
 						}else {
-						fprintf(fptr, "Division Operator: ", lexeme[i]);
+						fprintf(fptr, "<divOp> ", lexeme[i]);
 						//strDesc = "division operator";
 						//strToken = find_Tokens(currstate);
 						//printf("I am strToken: %s\n", strToken);
@@ -137,7 +137,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "Modulus Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<modOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -149,7 +149,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "Exponential Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<expOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -158,7 +158,7 @@ void lexical (){ //int
 
 			case q8: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<incOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -168,7 +168,7 @@ void lexical (){ //int
 
 			case q9: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Decrement Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<decOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -178,7 +178,7 @@ void lexical (){ //int
 						
 			case q10: 	lexeme[buffcount] = currchar;  //++ /
 						buffcount++;
-                        fprintf(fptr, "Integer Division Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<intDivOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -191,7 +191,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "Assignment Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<assOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -200,7 +200,7 @@ void lexical (){ //int
 
 			case q12: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Assignment with Addition Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<assAddOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -210,7 +210,7 @@ void lexical (){ //int
 
 			case q13: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Assignment with Subtraction Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<assSubOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -220,7 +220,7 @@ void lexical (){ //int
 
 			case q14: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Assignment with Multiplication Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<assMultOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -230,7 +230,7 @@ void lexical (){ //int
 
 			case q15: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Assignment with Division Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<assDivOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -240,7 +240,7 @@ void lexical (){ //int
 
 			case q16: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Assignment with Modulus Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<assModOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -250,7 +250,7 @@ void lexical (){ //int
 
 			case q17: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Assignment with Exponent Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<assExpOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -263,7 +263,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "Less than Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<lessOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -275,7 +275,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "Greater than Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<grtOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -287,7 +287,7 @@ void lexical (){ //int
 						currchar = getNonBlank();
 						currstate = get_dest();
 						}else {
-                        fprintf(fptr, "Not Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<notOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						memset(lexeme, 0, 100);
@@ -307,7 +307,7 @@ void lexical (){ //int
 
 			case q22: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "And Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<andOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -328,7 +328,7 @@ void lexical (){ //int
 
 			case q24: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Or Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<orOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -338,7 +338,7 @@ void lexical (){ //int
 
 			case q25: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Equality Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<eqlOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -348,7 +348,7 @@ void lexical (){ //int
 
 			case q26: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Non-equality Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<nonEqlOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -358,7 +358,7 @@ void lexical (){ //int
 
 			case q27: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Less than or equal to Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<lessEqlOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -368,7 +368,7 @@ void lexical (){ //int
 
 			case q28: 	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Greater than or equal to Operator: ", lexeme[i]);
+                        			fprintf(fptr, "<grtEqlOp> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -403,7 +403,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;
 						}else {
-						    fprintf(fptr, "Reserved Word: ", lexeme[i]); // int
+							fprintf(fptr, "<resInt> ", lexeme[i]); // int
 							accept(lexeme, buffcount); // on file, Reserved word: int
 							reset(&buffcount, &currstate); // buffcount = 0, currstate = 0
 							currchar = ' ';
@@ -459,7 +459,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;;
 						}else {
-							fprintf(fptr, "Reserved Word: ", lexeme[i]);
+							fprintf(fptr, "<resFloat> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -505,7 +505,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;;
 						}else {
-							fprintf(fptr, "Reserved Word: ", lexeme[i]);
+							fprintf(fptr, "<resChar> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -551,7 +551,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;;
 						}else {
-							fprintf(fptr, "Reserved Word: ", lexeme[i]);
+							fprintf(fptr, "<resBool> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -597,7 +597,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;;
 						}else {
-							fprintf(fptr, "Reserved Word: ", lexeme[i]);
+							fprintf(fptr, "<resNull> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -633,7 +633,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;
 						}else {
-							fprintf(fptr, "Reserved Word: ", lexeme[i]);
+							fprintf(fptr, "<resTrue> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -681,7 +681,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;
 						}else {
-							fprintf(fptr, "Reserved Word: ", lexeme[i]);
+							fprintf(fptr, "<resFalse> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -709,7 +709,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;
 						}else {
-							fprintf(fptr, "Keyword: ", lexeme[i]);
+							fprintf(fptr, "<keyFor> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -765,7 +765,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;
 						}else {
-							fprintf(fptr, "Keyword: ", lexeme[i]);
+							fprintf(fptr, "<keyWhile> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -783,7 +783,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;
 						}else {
-							fprintf(fptr, "Keyword: ", lexeme[i]);
+							fprintf(fptr, "<keyIf> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -829,7 +829,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;
 						}else {
-							fprintf(fptr, "Keyword: ", lexeme[i]);
+							fprintf(fptr, "<keyElse> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -885,7 +885,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;
 						}else {
-							fprintf(fptr, "Keyword: ", lexeme[i]);
+							fprintf(fptr, "<keyPrint> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -931,7 +931,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;
 						}else {
-							fprintf(fptr, "Keyword: ", lexeme[i]);
+							fprintf(fptr, "<keyScan> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -987,7 +987,7 @@ void lexical (){ //int
 						}else  if (is_identifier(nextchar)){
 							currstate = q1;;
 						}else {
-							fprintf(fptr, "Keyword: ", lexeme[i]);
+							fprintf(fptr, "<noiseHence> ", lexeme[i]);
 							accept(lexeme, buffcount);
 							reset(&buffcount, &currstate);
 							currchar = ' ';
@@ -1009,7 +1009,7 @@ void lexical (){ //int
 								currchar = getChar();
 							}
 						lexeme[buffcount] = '\0';
-						fprintf(fptr, "Contents of line comment:~~~");
+						fprintf(fptr, "<linecomm> ");
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -1054,7 +1054,7 @@ void lexical (){ //int
 
 			case q86: lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+                        fprintf(fptr, "<delcom> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -1064,7 +1064,7 @@ void lexical (){ //int
 
 			case q87:	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+                        fprintf(fptr, "<delsemcol"> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -1074,7 +1074,7 @@ void lexical (){ //int
 
 			case q88:	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+                        fprintf(fptr, "<delsquo> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -1084,7 +1084,7 @@ void lexical (){ //int
 
 			case q89:	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+                        fprintf(fptr, "<deldquo> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -1094,7 +1094,7 @@ void lexical (){ //int
 
 			case q90:	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+                        fprintf(fptr, "<dellbrack> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
@@ -1104,7 +1104,7 @@ void lexical (){ //int
 
 			case q91:	lexeme[buffcount] = currchar;  //++
 						buffcount++;
-                        fprintf(fptr, "Increment Operator: ", lexeme[i]);
+                        fprintf(fptr, "<delrbrack> ", lexeme[i]);
 						accept(lexeme, buffcount);
 						reset(&buffcount, &currstate);
 						currchar = ' ';
