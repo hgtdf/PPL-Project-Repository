@@ -7,6 +7,7 @@
 
 int i=0;
 int k=0;
+FILE *fptr = NULL;
 
 void accept();
 void reset();
@@ -87,32 +88,32 @@ struct transition {
 };
 
 struct transition transition_table [] = {
-	{q0, '+', q2}, {q2, '+', q8}, {q2, '=', q12},
-	{q0, '-', q3}, {q3, '-', q9}, {q3, '=', q13},
-	{q0, '*', q4}, {q4, '=', q14},
-	{q0, '/', q5}, {q5, '/', q10}, {q5, '=', q15}, {q5, '-', q82},
-	{q0, '%', q6}, {q6, '=', q16},
-	{q0, '^', q7}, {q7, '=', q17},
-	{q0, '=', q11}, {q11, '=', q25},
-	{q0, '<', q18}, {q18, '=', q27},
-	{q0, '>', q19}, {q19,'=', q28},
-	{q0, '!', q20}, {q20, '=', q26},
-	{q0, '&', q21}, {q21, '&', q22},
-	{q0, '|', q23}, {q23, '|', q24},
-	{q0, 'i', q29}, {q29, 'n', q30}, {q30, 't', q31},
-	{q0, 'f', q32}, {q32, 'l', q33}, {q33, 'o', q34}, {q34, 'a', q35}, {q35, 't', q36},
-	{q0, 'c', q37}, {q7, 'h', q38}, {q38, 'a', q39}, {q39, 'r', q40},
-	{q0, 'b', q41}, {q41, 'o', q42}, {q42, 'o', q43}, {q43, 'l', q44},
-	{q0, 'n', q45}, {q45, 'u', q46}, {q46, 'l', q47}, {q47, 'l', q48},
-	{q0, 't', q49}, {q49, 'r', q50}, {q50, 'u', q51}, {q51, 'e', q52},
-	{q0,'f', q32}, {q32, 'a', q53}, {q53, 'l', q54}, {q54, 's', q55}, {q55, 'e', q56},
-	{q0, 'f', q32}, {q32, 'o', q56}, {q56, 'r', q57},
-	{q0, 'w', q58}, {q58, 'h', q59}, {q59, 'i', q60}, {q60, 'l', q61}, {q61, 'e', q62},
-	{q0, 'i', q29}, {q29, 'f', q63},
-	{q0, 'e', q64}, {q64, 'l', q65}, {q65, 's', q66}, {q66, 'e', q67},
-	{q0, 'p', q68}, {q68, 'r', q69}, {q69, 'i', q70}, {q70, 'n', q71}, {q71, 't', q72},
-	{q0, 's', q73}, {q73, 'c', q74}, {q74, 'a', q75}, {q75, 'n', q76},
-	{q0, 'h', q77}, {q77, 'e', q78}, {q78, 'n', q79},{q79, 'c', q80}, {q80, 'e', q81}
+    {q0, '+', q2}, {q2, '+', q8}, {q2, '=', q12},
+    {q0, '-', q3}, {q3, '-', q9}, {q3, '=', q13},
+    {q0, '*', q4}, {q4, '=', q14},
+    {q0, '/', q5}, {q5, '/', q10}, {q5, '=', q15}, {q5, '-', q83}, {q5, '*', q84},
+    {q0, '%', q6}, {q6, '=', q16},
+    {q0, '^', q7}, {q7, '=', q17},
+    {q0, '=', q11}, {q11, '=', q25},
+    {q0, '<', q18}, {q18, '=', q27},
+    {q0, '>', q19}, {q19,'=', q28},
+    {q0, '!', q20}, {q20, '=', q26},
+    {q0, '&', q21}, {q21, '&', q22},
+    {q0, '|', q23}, {q23, '|', q24},
+    {q0, 'i', q29}, {q29, 'n', q30}, {q30, 't', q31},
+    {q0, 'f', q32}, {q32, 'l', q33}, {q33, 'o', q34}, {q34, 'a', q35}, {q35, 't', q36},
+    {q0, 'c', q37}, {q7, 'h', q38}, {q38, 'a', q39}, {q39, 'r', q40},
+    {q0, 'b', q41}, {q41, 'o', q42}, {q42, 'o', q43}, {q43, 'l', q44},
+    {q0, 'n', q45}, {q45, 'u', q46}, {q46, 'l', q47}, {q47, 'l', q48},
+    {q0, 't', q49}, {q49, 'r', q50}, {q50, 'u', q51}, {q51, 'e', q52},
+    {q0,'f', q32}, {q32, 'a', q53}, {q53, 'l', q54}, {q54, 's', q55}, {q55, 'e', q56},
+    {q0, 'f', q32}, {q32, 'o', q57}, {q57, 'r', q58},
+    {q0, 'w', q59}, {q59, 'h', q60}, {q60, 'i', q61}, {q61, 'l', q62}, {q62, 'e', q63},
+    {q0, 'i', q29}, {q29, 'f', q64},
+    {q0, 'e', q65}, {q65, 'l', q66}, {q66, 's', q67}, {q67, 'e', q68},
+    {q0, 'p', q69}, {q69, 'r', q70}, {q70, 'i', q71}, {q71, 'n', q72}, {q72, 't', q73},
+    {q0, 's', q74}, {q74, 'c', q75}, {q75, 'a', q76}, {q76, 'n', q77},
+    {q0, 'h', q78}, {q78, 'e', q79}, {q79, 'n', q80}, {q80, 'c', q81}, {q81, 'e', q82}
 };
 
 bool find_dest(state srcstate, char currchar){//checks if specified transition is present in transitions_table[]
@@ -131,10 +132,10 @@ bool find_dest(state srcstate, char currchar){//checks if specified transition i
 
 void accept (char lexeme[], int buffcount){
 	int i;
-	for (i=0; i<buffcount; i++){
-		printf("%c", lexeme[i]); 
-	}
-	printf("\n");
+    for (i=0; i<buffcount; i++){
+        fprintf(fptr, "%c", lexeme[i]); 
+    }
+    fprintf(fptr, "\n");
 }
 
 void reset (int *buffcount, state *currstate){
@@ -209,6 +210,8 @@ int checkfile (char *plfile){ // check for file's filetype
     }
 }
 
+
+/*
 char find_Tokens (state fstate){
 	int a;
 	if (fstate == token_table[k].final_state){
@@ -231,4 +234,4 @@ char find_Desc (state fstate){
 		k++;
 		find_Desc(fstate);
 	}
-}
+}*/
